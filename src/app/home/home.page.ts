@@ -1,8 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { addIcons } from 'ionicons';
-import { arrowBack, arrowBackCircleOutline, moonOutline, sunnyOutline } from 'ionicons/icons';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 
@@ -29,7 +27,6 @@ export class HomePage implements OnInit {
     private router: Router,
     private storageService: StorageService
   ) {
-    addIcons({ moonOutline, sunnyOutline, arrowBack });
   }
 
   ngOnInit(): void {

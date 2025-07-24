@@ -4,16 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { addIcons } from 'ionicons';
-import {
-  arrowForwardOutline,
-  musicalNotesOutline,
-  headsetOutline,
-  cloudDownloadOutline,
-  listOutline,
-  moonOutline,
-  rocketOutline
-} from 'ionicons/icons';
 
 @Component({
   selector: 'app-introduccion',
@@ -34,16 +24,6 @@ export class IntroduccionPage implements OnInit {
     private storageService: StorageService
   ) {
 
-    addIcons({
-      arrowForwardOutline,
-      musicalNotesOutline,
-      headsetOutline,
-      cloudDownloadOutline,
-      listOutline,
-      moonOutline,
-      rocketOutline
-    });
-
   }
 
   ngOnInit() {
@@ -51,7 +31,7 @@ export class IntroduccionPage implements OnInit {
 
   async goHome() {
     await this.storageService.set('IWasAtIntroduction', 'true')
-    this.router.navigateByUrl("/home")
+    this.router.navigateByUrl("menu/home")
   }
 
   slides = [
