@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from "@ionic/angular";
+import { Router } from '@angular/router';
+import { StorageService } from '../services/storage.service';
+import { ToastService } from '../services/toast.service';
 
 @Component({
   selector: 'app-menu',
@@ -12,9 +15,17 @@ import { IonicModule } from "@ionic/angular";
 })
 export class MenuPage implements OnInit {
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private storageService: StorageService,
+    private toastService: ToastService
+  ) { }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  async logout() {
+    await this.storageService.remove('login');
+    await this.toastService.showMessageInfo('Sesión cerrada correctamente');
+    this.router.navigateByUrl('/login', { replaceUrl: true });
   }
-
 }

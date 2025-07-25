@@ -72,6 +72,7 @@ export class HomePage implements OnInit {
 
 
   goToIntroduction() {
+    this.storageService.remove("IWasAtIntroduction");
     this.router.navigateByUrl("/introduccion")
   }
 

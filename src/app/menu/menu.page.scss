@@ -1,0 +1,11 @@
+ion-menu {
+    --ion-background-color: var(--ion-item-background);
+}
+
+ion-item {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 8px;
+    --border-radius: 12px;
+    margin: 4px 8px;
+}

@@ -1,22 +1,20 @@
 <ion-split-pane contentId="main-content">
   <ion-menu contentId="main-content">
     <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-menu-toggle>
-            <ion-icon name="close-circle-outline"></ion-icon>
-          </ion-menu-toggle>
-        </ion-buttons>
+      <ion-toolbar color="primary">
         <ion-title class="ion-text-center">Menú</ion-title>
       </ion-toolbar>
     </ion-header>
+
     <ion-content>
       <ion-list>
-        <ion-item>
-          Cerrar sesion ❎
+        <ion-item button (click)="logout()">
+          <ion-icon name="log-out-outline" slot="start"></ion-icon>
+          <ion-label>Cerrar sesión</ion-label>
         </ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
+
   <ion-router-outlet id="main-content"></ion-router-outlet>
 </ion-split-pane>

@@ -4,13 +4,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content>
   <figure>
     <img src="assets/images/musica-1.jpg" alt="Imagen de música" />
   </figure>
 
   <form [formGroup]="loginForm" (ngSubmit)="submit()">
-    <!-- Email -->
     <ion-item>
       <ion-input formControlName="email" label="Correo electrónico" labelPlacement="stacked"
         placeholder="Digite su correo" type="email">
@@ -20,21 +19,18 @@
       <p *ngIf="email.errors?.['required']">El correo es obligatorio.</p>
       <p *ngIf="email.errors?.['email']">Debe ingresar un correo válido.</p>
     </ion-text>
-
-    <!-- Password -->
     <ion-item>
-      <ion-input formControlName="password" type="password" label="Contraseña" labelPlacement="stacked"
-        placeholder="Digite su contraseña">
+      <ion-input formControlName="password" label="Contraseña" labelPlacement="stacked"
+        placeholder="Digite su contraseña" type="password">
       </ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="password.invalid && (password.dirty || password.touched)">
       <p *ngIf="password.errors?.['required']">La contraseña es obligatoria.</p>
     </ion-text>
-
-    <ion-button expand="full" shape="round" color="success" type="submit">
+    <ion-button expand="block" shape="round" color="success" type="submit" [disabled]="!this.loginForm.valid">
       Ingresar
     </ion-button>
-    <ion-button expand="full" shape="round" color="primary" fill="clear" (click)="goToRegister()">
+    <ion-button expand="block" shape="round" fill="clear" (click)="goToRegister()">
       ¿No tienes cuenta? Regístrate
     </ion-button>
   </form>
