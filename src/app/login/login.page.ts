@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { AuthService } from '../services/auth.service';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule, ReactiveFormsModule, RouterLink]
+  imports: [CommonModule, FormsModule, IonicModule, ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
 
@@ -18,7 +18,8 @@ export class LoginPage implements OnInit {
 
   constructor(
     private formBuolder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.loginForm = this.formBuolder.group({
       email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
@@ -42,8 +43,11 @@ export class LoginPage implements OnInit {
       this.authService.loginUser(this.loginForm.value).then(res => {
         console.log(res);
       })
-
     }
+  }
+
+  goToRegister() {
+    this.router.navigateByUrl('/registro');
   }
 
 }

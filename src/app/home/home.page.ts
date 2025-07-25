@@ -3,6 +3,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
+import { MusicService, Track } from '../services/music.service';
 
 export interface slides {
   title: string,
@@ -21,35 +22,7 @@ export class HomePage implements OnInit {
 
   theme: string = "claro";
   colorTheme: string = 'var(--bg-claro-2)';
-
-
-  constructor(
-    private router: Router,
-    private storageService: StorageService
-  ) {
-  }
-
-  ngOnInit(): void {
-    this.loadTheme();
-  }
-
-  async loadTheme() {
-    const saveTheme = await this.storageService.get('theme');
-    if (saveTheme) {
-      this.colorTheme = saveTheme
-    }
-  }
-
-  changeTeme() {
-    this.theme = this.theme === "claro" ? "oscuro" : "claro";
-    this.colorTheme = this.theme === "claro" ? "var(--bg-claro-2)" : "var(--bg-oscuro)";
-  }
-
-
-  goToIntroduction() {
-    this.router.navigateByUrl("/introduccion")
-  }
-
+  tracks: Track[] = [];
   listSlides: slides[] = [
     {
       title: 'Bienvenido al Ritmo de tu Vida',
@@ -72,4 +45,42 @@ export class HomePage implements OnInit {
       description: 'Arma tus playlists, sigue a tus artistas favoritos y comparte lo que estás escuchando con tus amigos.'
     },
   ];
+
+  constructor(
+    private router: Router,
+    private storageService: StorageService,
+    private msuicService: MusicService
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.loadTheme();
+    this.loadTracks();
+  }
+
+  async loadTheme() {
+    const saveTheme = await this.storageService.get('theme');
+    if (saveTheme) {
+      this.colorTheme = saveTheme
+    }
+  }
+
+  changeTeme() {
+    this.theme = this.theme === "claro" ? "oscuro" : "claro";
+    this.colorTheme = this.theme === "claro" ? "var(--bg-claro-2)" : "var(--bg-oscuro)";
+  }
+
+
+  goToIntroduction() {
+    this.router.navigateByUrl("/introduccion")
+  }
+
+  loadTracks() {
+    this.msuicService.getTracks().subscribe({
+      next: (res) => {
+        this.tracks = res;
+      }
+    })
+  }
+
 }

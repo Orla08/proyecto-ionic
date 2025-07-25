@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="registerForm" (ngSubmit)="submit()">
+    <!-- Nombre -->
+    <ion-item>
+      <ion-input formControlName="nombre" label="Nombre" labelPlacement="stacked" placeholder="Tu nombre">
+      </ion-input>
+    </ion-item>
+
+    <!-- Apellido -->
+    <ion-item>
+      <ion-input formControlName="apellido" label="Apellido" labelPlacement="stacked" placeholder="Tu apellido">
+      </ion-input>
+    </ion-item>
+
+    <!-- Email -->
+    <ion-item>
+      <ion-input formControlName="email" label="Correo electrónico" labelPlacement="stacked"
+        placeholder="ejemplo@correo.com" type="email">
+      </ion-input>
+    </ion-item>
+
+    <!-- Password -->
+    <ion-item>
+      <ion-input formControlName="password" type="password" label="Contraseña" labelPlacement="stacked"
+        placeholder="Contraseña">
+      </ion-input>
+    </ion-item>
+
+    <ion-button expand="full" shape="round" color="primary" type="submit">
+      Registrarse
+    </ion-button>
+  </form>
+</ion-content>

@@ -26,6 +26,10 @@ export const routes: Routes = [
         canActivate: [IntroGuard]
       },
     ]
+  },  {
+    path: 'register',
+    loadComponent: () => import('./register/register.page').then( m => m.RegisterPage)
   },
+
 
 ];
