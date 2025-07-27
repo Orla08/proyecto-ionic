@@ -56,7 +56,6 @@ export class HomePage implements OnInit {
 
   ngOnInit(): void {
     this.loadTheme();
-    this.loadTracks();
   }
 
   async loadTheme() {
@@ -77,13 +76,6 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl("/introduccion")
   }
 
-  loadTracks() {
-    this.musicService.getTracks().subscribe({
-      next: (res) => {
-        this.tracks = res;
-      }
-    })
-  }
 
   loadAllAlbums() {
     this.musicService.getAllAlbums().subscribe({

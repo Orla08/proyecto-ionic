@@ -28,19 +28,28 @@ export class ArtitsPage implements OnInit {
   currentTime: string = '0:00';
   durationTime: string = '0:00';
   isFavoriteSong: boolean = false;
+  userLogueado: any
+
 
   constructor(
     private router: Router,
     private storageService: StorageService,
     private musicService: MusicService,
     private modalController: ModalController
-  ) { }
+  ) {
+  }
 
-  ngOnInit(): void {
+  async ngOnInit() {
+    await this.loadUserLogueado();
     this.loadTheme();
     this.loadArtists();
     this.audio?.pause();
     this.audio = null;
+  }
+
+  async loadUserLogueado() {
+    const user = await this.storageService.get('UsuarioActivo');
+    this.userLogueado = user;
   }
 
   async loadTheme() {
@@ -77,7 +86,7 @@ export class ArtitsPage implements OnInit {
     this.showAll = !this.showAll;
   }
 
-  async showSongsByArtist(artist: any) {
+  async showSongsByArtists(artist: any) {
     const tracks = await this.musicService.getTracksByArtitsId(artist.id).toPromise();
 
     const modal = await this.modalController.create({
@@ -181,11 +190,10 @@ export class ArtitsPage implements OnInit {
 
     const body = {
       favorite_track: {
-        user_id: 0,
+        user_id: this.userLogueado.id,
         track_id: this.song.id
       }
     };
-
     this.musicService.postTrackFavorite(body).subscribe({
       next: () => {
         this.isFavoriteSong = true;

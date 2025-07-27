@@ -16,7 +16,7 @@
   </div>
   <swiper-container *ngIf="!showAll" slides-per-view="2.3" space-between="16" loop="true" style="padding: 1rem 0;">
 
-    <swiper-slide *ngFor="let artist of artists" class="artist-slide" (click)="showSongsByArtist(artist)">
+    <swiper-slide *ngFor="let artist of artists" class="artist-slide" (click)="showSongsByArtists(artist)">
       <div class="artist-card">
         <div class="artist-img-wrapper">
           <img [src]="artist.image" />
@@ -33,7 +33,7 @@
   </swiper-container>
 
   <div *ngIf="showAll" class="grid-wrapper">
-    <div class="artist-card" *ngFor="let artist of artists" (click)="showSongsByArtist(artist)">
+    <div class="artist-card" *ngFor="let artist of artists" (click)="showSongsByArtists(artist)">
       <div class="artist-img-wrapper">
         <img [src]="artist.image" />
       </div>

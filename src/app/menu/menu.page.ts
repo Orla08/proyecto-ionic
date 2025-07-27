@@ -18,13 +18,14 @@ export class MenuPage implements OnInit {
   constructor(
     private router: Router,
     private storageService: StorageService,
-    private toastService: ToastService
+    private toastService: ToastService,
   ) { }
 
   ngOnInit() { }
 
   async logout() {
     await this.storageService.remove('login');
+    await this.storageService.remove('UsuarioActivo');
     await this.toastService.showMessageInfo('Sesión cerrada correctamente');
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }

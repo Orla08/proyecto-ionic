@@ -17,8 +17,8 @@ export class SongsModalPage implements OnInit {
   constructor(private modalController: ModalController) { }
 
   ngOnInit() {
-    console.log('Artista:', this.artist);
-    console.log('Canciones:', this.tracks);
+    // console.log('Artista:', this.artist);
+    // console.log('Canciones:', this.tracks);
   }
 
   closeModal() {

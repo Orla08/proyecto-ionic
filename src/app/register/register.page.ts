@@ -24,19 +24,19 @@ export class RegisterPage {
     private toastService: ToastService
   ) {
     this.registerForm = this.fb.group({
-      name: new FormControl('Orlando De La Hoz', [
+      name: new FormControl('', [
         Validators.required,
         Validators.minLength(15)
       ]),
-      username: new FormControl('Orlando2704200', [
+      username: new FormControl('', [
         Validators.required,
         Validators.minLength(10)
       ]),
-      email: new FormControl('orladelahoz2704@gmail.com', [
+      email: new FormControl('', [
         Validators.required,
         Validators.email
       ]),
-      password: new FormControl('123456789', [
+      password: new FormControl('', [
         Validators.required,
         Validators.minLength(8)
       ])

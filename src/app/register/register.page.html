@@ -10,23 +10,23 @@
   </figure>
 
   <form [formGroup]="registerForm" (ngSubmit)="submit()">
-    <!-- Nombre -->
     <ion-item>
-      <ion-input formControlName="name" label="Nombre" labelPlacement="stacked" placeholder="Nombre completo">
-      </ion-input>
+      <ion-input formControlName="name" label="Nombre" labelPlacement="stacked"
+        placeholder="Nombre completo"></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="name.invalid && (name.dirty || name.touched)">
       <p *ngIf="name.errors?.['required']">El nombre es obligatorio.</p>
+      <p *ngIf="name.errors?.['minlength']">El nombre debe tener al menos 15 caracteres.</p>
     </ion-text>
-
-    <!-- Apellido -->
     <ion-item>
-      <ion-input formControlName="username" label="Usuario" labelPlacement="stacked" placeholder="Digite  usuario">
-      </ion-input>
+      <ion-input formControlName="username" label="Usuario" labelPlacement="stacked"
+        placeholder="Digite usuario"></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="username.invalid && (username.dirty || username.touched)">
-      <p *ngIf="username.errors?.['required']">El apellido es obligatorio.</p>
+      <p *ngIf="username.errors?.['required']">El usuario es obligatorio.</p>
+      <p *ngIf="username.errors?.['minlength']">El usuario debe tener al menos 10 caracteres.</p>
     </ion-text>
+
     <ion-item>
       <ion-input formControlName="email" label="Correo electrónico" labelPlacement="stacked"
         placeholder="ejemplo@correo.com" type="email">
@@ -36,13 +36,14 @@
       <p *ngIf="email.errors?.['required']">El correo es obligatorio.</p>
       <p *ngIf="email.errors?.['email']">Debe ingresar un correo válido.</p>
     </ion-text>
+
     <ion-item>
       <ion-input formControlName="password" type="password" label="Contraseña" labelPlacement="stacked"
-        placeholder="Contraseña">
-      </ion-input>
+        placeholder="Contraseña"></ion-input>
     </ion-item>
     <ion-text color="danger" *ngIf="password.invalid && (password.dirty || password.touched)">
       <p *ngIf="password.errors?.['required']">La contraseña es obligatoria.</p>
+      <p *ngIf="password.errors?.['minlength']">La contraseña debe tener al menos 8 caracteres.</p>
     </ion-text>
     <ion-button expand="block" shape="round" color="primary" type="submit" [disabled]="!this.registerForm.valid">
       Registrarse

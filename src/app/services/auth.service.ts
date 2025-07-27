@@ -10,6 +10,11 @@ export interface UserCreateRequest {
   password: string;
 }
 
+export interface UserLogin {
+  email: string,
+  password: string
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -70,8 +75,13 @@ export class AuthService {
     return this.http.post(`${this.base_url}/signup`, payload);
   }
 
-  login(email: string, password: string): Observable<any> {
-    const payload = { email: email, password: password };
+  login(body: UserLogin): Observable<any> {
+    const payload = {
+      user: {
+        email: body.email,
+        password: body.password
+      }
+    };
     return this.http.post(`${this.base_url}/login`, payload);
   }
 
