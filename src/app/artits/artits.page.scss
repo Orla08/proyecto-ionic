@@ -66,8 +66,40 @@
     justify-items: center;
 }
 
-.toggle-button-wrapper {
+.player-toolbar {
+    --background: #111;
+    color: #fff;
+    padding-top: 8px;
+    padding-bottom: 4px;
+}
+
+.music-icon {
+    font-size: 28px;
+    color: #fff;
+}
+
+.track-info {
     display: flex;
-    justify-content: flex-end;
-    margin-bottom: 0.5rem;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.track-title {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.track-artist {
+    font-size: 0.75rem;
+    color: #ccc;
+}
+
+.progress-row {
+    margin-top: 6px;
+}
+
+.time-label {
+    font-size: 0.7rem;
+    color: #aaa;
 }

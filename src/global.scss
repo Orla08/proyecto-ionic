@@ -103,6 +103,13 @@ figure img {
     animation: fadeInZoom 0.8s ease forwards;
 }
 
+.toggle-button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 0.5rem;
+}
+
+
 @keyframes fadeInZoom {
     from {
         opacity: 0;

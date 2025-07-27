@@ -29,4 +29,7 @@ export class SongsModalPage implements OnInit {
     const audio = new Audio(url);
     audio.play();
   }
+  selectSong(song: any) {
+    this.modalController.dismiss(song); // Devuelve la canción seleccionada
+  }
 }

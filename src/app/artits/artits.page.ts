@@ -21,6 +21,13 @@ export class ArtitsPage implements OnInit {
   colorTheme: string = 'var(--bg-claro-2)';
   artists: any[] = [];
   showAll = false;
+  song?: Track;
+  isPlaying: boolean = false;
+  audio: HTMLAudioElement | null = null;
+  progress: number = 0;
+  currentTime: string = '0:00';
+  durationTime: string = '0:00';
+  isFavoriteSong: boolean = false;
 
   constructor(
     private router: Router,
@@ -32,6 +39,8 @@ export class ArtitsPage implements OnInit {
   ngOnInit(): void {
     this.loadTheme();
     this.loadArtists();
+    this.audio?.pause();
+    this.audio = null;
   }
 
   async loadTheme() {
@@ -70,6 +79,7 @@ export class ArtitsPage implements OnInit {
 
   async showSongsByArtist(artist: any) {
     const tracks = await this.musicService.getTracksByArtitsId(artist.id).toPromise();
+
     const modal = await this.modalController.create({
       component: SongsModalPage,
       componentProps: {
@@ -77,6 +87,135 @@ export class ArtitsPage implements OnInit {
         artist: artist
       }
     });
+
+    modal.onDidDismiss().then((result: any) => {
+      if (result.data) {
+        if (this.audio) {
+          this.audio.pause();
+          this.audio.currentTime = 0;
+          this.audio = null;
+        }
+        this.isPlaying = false;
+        this.progress = 0;
+        this.currentTime = '0:00';
+        this.durationTime = '0:00';
+        this.song = result.data;
+        this.FavoriteSong();
+        this.audio = new Audio(this.song!.preview_url);
+        this.audio.addEventListener('timeupdate', () => this.updateProgress());
+        this.audio.addEventListener('ended', () => this.resetPlayer());
+        this.audio.play();
+        this.isPlaying = true;
+      }
+    });
+
     await modal.present();
   }
+
+
+  playSong() {
+    if (!this.song) return;
+
+    if (!this.audio) {
+      this.audio = new Audio(this.song.preview_url);
+      this.audio.addEventListener('timeupdate', () => this.updateProgress());
+      this.audio.addEventListener('ended', () => this.resetPlayer());
+    }
+
+    this.audio.play();
+    this.isPlaying = true;
+  }
+
+  pauseSong() {
+    this.audio?.pause();
+    this.isPlaying = false;
+  }
+
+  togglePlay() {
+    this.isPlaying ? this.pauseSong() : this.playSong();
+  }
+
+  updateProgress() {
+    if (!this.audio) return;
+    const current = this.audio.currentTime;
+    const duration = this.audio.duration;
+
+    this.progress = (current / duration) * 100;
+    this.currentTime = this.formatTime(current);
+    this.durationTime = this.formatTime(duration);
+  }
+
+  formatTime(time: number): string {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60).toString().padStart(2, '0');
+    return `${minutes}:${seconds}`;
+  }
+
+  resetPlayer() {
+    this.isPlaying = false;
+    this.progress = 0;
+    this.currentTime = '0:00';
+  }
+
+  FavoriteSong() {
+    if (this.song) {
+      this.musicService.getAllTracksFavorites().subscribe({
+        next: (res) => {
+          if (res.length > 0) {
+            this.isFavoriteSong = res.some((citas) => citas.track_id === this.song!.id);
+          } else {
+            this.isFavoriteSong = false;
+          }
+        },
+        error: (err) => {
+          console.error('Error al obtener favoritos', err);
+          this.isFavoriteSong = false;
+        }
+      });
+    }
+  }
+
+
+  markSongAsFavorite() {
+    if (!this.song) return;
+
+    const body = {
+      favorite_track: {
+        user_id: 0,
+        track_id: this.song.id
+      }
+    };
+
+    this.musicService.postTrackFavorite(body).subscribe({
+      next: () => {
+        this.isFavoriteSong = true;
+      },
+      error: (err) => {
+        console.error('Error al marcar como favorita:', err);
+      }
+    });
+  }
+
+  removeSongFromFavorites() {
+    if (!this.song) return;
+
+    this.musicService.deleteTrackFavorite(this.song.id).subscribe({
+      next: () => {
+        this.isFavoriteSong = false;
+      },
+      error: (err) => {
+        console.error('Error al eliminar de favoritos:', err);
+      }
+    });
+  }
+
+  toggleFavorite() {
+    if (this.isFavoriteSong) {
+      this.removeSongFromFavorites();
+    } else {
+      this.markSongAsFavorite();
+    }
+  }
+
+
 }

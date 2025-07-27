@@ -12,20 +12,20 @@
   <form [formGroup]="registerForm" (ngSubmit)="submit()">
     <!-- Nombre -->
     <ion-item>
-      <ion-input formControlName="nombre" label="Nombre" labelPlacement="stacked" placeholder="Tu nombre">
+      <ion-input formControlName="name" label="Nombre" labelPlacement="stacked" placeholder="Nombre completo">
       </ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
-      <p *ngIf="nombre.errors?.['required']">El nombre es obligatorio.</p>
+    <ion-text color="danger" *ngIf="name.invalid && (name.dirty || name.touched)">
+      <p *ngIf="name.errors?.['required']">El nombre es obligatorio.</p>
     </ion-text>
 
     <!-- Apellido -->
     <ion-item>
-      <ion-input formControlName="apellido" label="Apellido" labelPlacement="stacked" placeholder="Tu apellido">
+      <ion-input formControlName="username" label="Usuario" labelPlacement="stacked" placeholder="Digite  usuario">
       </ion-input>
     </ion-item>
-    <ion-text color="danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
-      <p *ngIf="apellido.errors?.['required']">El apellido es obligatorio.</p>
+    <ion-text color="danger" *ngIf="username.invalid && (username.dirty || username.touched)">
+      <p *ngIf="username.errors?.['required']">El apellido es obligatorio.</p>
     </ion-text>
     <ion-item>
       <ion-input formControlName="email" label="Correo electrónico" labelPlacement="stacked"

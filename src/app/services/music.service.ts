@@ -15,6 +15,15 @@ export interface Track {
   artist_id: number;
 }
 
+
+export interface requestToFavoriteTrack {
+  favorite_track: {
+    user_id: number;
+    track_id: number
+  }
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -40,21 +49,32 @@ export class MusicService {
   }
 
   getAllAlbums() {
-    return this.http.get<Track[]>(`${this.urlServer}/albums`)
+    return this.http.get<any[]>(`${this.urlServer}/albums`)
   }
 
   getAlbumById(albumId: number) {
-    return this.http.get<Track[]>(`${this.urlServer}/tracks/album/${albumId}`)
+    return this.http.get<any[]>(`${this.urlServer}/tracks/album/${albumId}`)
   }
 
   getAllArtits() {
-    return this.http.get<Track[]>(`${this.urlServer}/artists`)
+    return this.http.get<any[]>(`${this.urlServer}/artists`)
   }
 
   getArtitsById(id: number) {
-    return this.http.get<Track[]>(`${this.urlServer}/artists/${id}`)
+    return this.http.get<any[]>(`${this.urlServer}/artists/${id}`)
   }
 
 
+  getAllTracksFavorites() {
+    return this.http.get<any[]>(`${this.urlServer}/favorite_tracks`)
+  }
+
+  postTrackFavorite(body: requestToFavoriteTrack) {
+    return this.http.post<any>(`${this.urlServer}/favorite_tracks`, body)
+  }
+
+  deleteTrackFavorite(idTrack: number) {
+    return this.http.delete<any>(`${this.urlServer}/favorite_tracks/${idTrack}`)
+  }
 
 }

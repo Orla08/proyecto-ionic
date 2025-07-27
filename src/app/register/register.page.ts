@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { AuthService, User } from '../services/auth.service';
+import { AuthService, UserCreateRequest } from '../services/auth.service';
 import { ToastService } from '../services/toast.service';
 
 @Component({
@@ -24,33 +24,40 @@ export class RegisterPage {
     private toastService: ToastService
   ) {
     this.registerForm = this.fb.group({
-      nombre: new FormControl('', [
+      name: new FormControl('Orlando De La Hoz', [
         Validators.required,
-        Validators.minLength(2)
+        Validators.minLength(15)
       ]),
-      apellido: new FormControl('', [
+      username: new FormControl('Orlando2704200', [
         Validators.required,
-        Validators.minLength(2)
+        Validators.minLength(10)
       ]),
-      email: new FormControl('', [
+      email: new FormControl('orladelahoz2704@gmail.com', [
         Validators.required,
         Validators.email
       ]),
-      password: new FormControl('', [
+      password: new FormControl('123456789', [
         Validators.required,
-        Validators.minLength(6)
+        Validators.minLength(8)
       ])
     });
 
   }
 
-  async submit() {
+  submit() {
     if (this.registerForm.valid) {
-      const newUser: User = this.registerForm.value;
+      const newUser: UserCreateRequest = this.registerForm.value;
       try {
-        await this.authService.registerUser(newUser);
-        this.toastService.showMessageOk("Registro exitoso. Ahora puedes iniciar sesión.");
-        this.router.navigateByUrl('/login');
+        this.authService.register(newUser).subscribe({
+          next: (res) => {
+            if (res.status == "OK") {
+              this.toastService.showMessageOk("Registro exitoso. Ahora puedes iniciar sesión.");
+              this.router.navigateByUrl('/login');
+            } else {
+              this.toastService.showMessageError(`Error: al registrar`);
+            }
+          }
+        })
       } catch (err: any) {
         this.toastService.showMessageError(`Error: ${err}`);
       }
@@ -59,12 +66,12 @@ export class RegisterPage {
     }
   }
 
-  get nombre() {
-    return this.registerForm.get('nombre')!;
+  get name() {
+    return this.registerForm.get('name')!;
   }
 
-  get apellido() {
-    return this.registerForm.get('apellido')!;
+  get username() {
+    return this.registerForm.get('username')!;
   }
 
   get email() {

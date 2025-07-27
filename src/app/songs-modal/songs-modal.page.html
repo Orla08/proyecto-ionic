@@ -1,14 +1,14 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>Canciones</ion-title>
-    <!-- <ion-buttons slot="end">
-      <ion-button (click)="dismiss()">
-        <ion-icon name="close" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
+<div class="toggle-button-wrapper">
+  <ion-button fill="clear" size="small" color="dark" (click)="closeModal()">
+    Volver
+  </ion-button>
+</div>
 <ion-content class="ion-padding">
   <div class="artist-header">
     <img [src]="artist.image" alt="Imagen del artista" class="artist-image" />
@@ -21,10 +21,9 @@
         <h3>{{ song.name }}</h3>
         <p>{{ song.duration_ms / 1000 }}s</p>
       </ion-label>
-      <audio controls slot="end" style="width: 120px">
-        <source [src]="song.preview_url" type="audio/mpeg" />
-        Tu navegador no soporta audio.
-      </audio>
+      <ion-button size="small" fill="outline" color="success" slot="end" (click)="selectSong(song)">
+        Seleccionar
+      </ion-button>
     </ion-item>
   </ion-list>
 

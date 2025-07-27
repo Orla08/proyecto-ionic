@@ -1,9 +1,11 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
+import { Observable } from 'rxjs';
 
-export interface User {
-  nombre: string;
-  apellido: string;
+export interface UserCreateRequest {
+  name: string;
+  username: string;
   email: string;
   password: string;
 }
@@ -13,9 +15,13 @@ export interface User {
 })
 export class AuthService {
 
+  base_url: string = "https://music.fly.dev"
+
   private readonly STORAGE_KEY = 'users';
 
-  constructor(private storage: Storage) {
+  constructor(private storage: Storage,
+    public http: HttpClient
+  ) {
     this.initStorage();
   }
 
@@ -23,8 +29,8 @@ export class AuthService {
     await this.storage.create();
   }
 
-  async registerUser(payload: User): Promise<string> {
-    const users: User[] = (await this.storage.get(this.STORAGE_KEY)) || [];
+  async registerUser(payload: any): Promise<string> {
+    const users: any[] = (await this.storage.get(this.STORAGE_KEY)) || [];
 
     // Validar si ya existe un usuario con el mismo email
     const exists = users.some(user => user.email === payload.email);
@@ -38,7 +44,7 @@ export class AuthService {
   }
 
   async loginUser(payload: { email: string; password: string }): Promise<string> {
-    const users: User[] = (await this.storage.get(this.STORAGE_KEY)) || [];
+    const users: any[] = (await this.storage.get(this.STORAGE_KEY)) || [];
 
     const user = users.find(
       u => u.email === payload.email && u.password === payload.password
@@ -49,5 +55,27 @@ export class AuthService {
     } else {
       return Promise.reject('Correo o contraseña incorrectos');
     }
+  }
+
+
+  register(user: UserCreateRequest): Observable<any> {
+    const payload = {
+      user: {
+        email: user.email,
+        password: user.password,
+        name: user.name,
+        username: user.username
+      }
+    };
+    return this.http.post(`${this.base_url}/signup`, payload);
+  }
+
+  login(email: string, password: string): Observable<any> {
+    const payload = { email: email, password: password };
+    return this.http.post(`${this.base_url}/login`, payload);
+  }
+
+  logout(): Observable<any> {
+    return this.http.delete(`${this.base_url}/logout`);
   }
 }

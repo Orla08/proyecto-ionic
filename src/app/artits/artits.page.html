@@ -4,18 +4,11 @@
       <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
     <ion-title class="ion-text-center" size="small">Tus artistas favoritos</ion-title>
-    <!-- <ion-buttons slot="end">
-      <ion-button shape="round" size="small" [color]="colorTheme == 'var(--bg-claro-2)' ? 'light' : 'light'"
-        (click)="changeTheme()">
-        <ion-icon slot="icon-only" [name]="theme == 'claro' ? 'moon-outline' : 'sunny-outline'"></ion-icon>
-      </ion-button>
-    </ion-buttons> -->
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" [style.background]="colorTheme">
 
-  <!-- MODO SWIPER -->
   <div class="toggle-button-wrapper">
     <ion-button fill="clear" size="small" color="dark" (click)="toggleView()">
       {{ showAll ? 'Reducir' : 'Mostrar todos' }}
@@ -24,7 +17,6 @@
   <swiper-container *ngIf="!showAll" slides-per-view="2.3" space-between="16" loop="true" style="padding: 1rem 0;">
 
     <swiper-slide *ngFor="let artist of artists" class="artist-slide" (click)="showSongsByArtist(artist)">
-      <!-- <swiper-slide *ngFor="let artist of artists" class="artist-slide"> -->
       <div class="artist-card">
         <div class="artist-img-wrapper">
           <img [src]="artist.image" />
@@ -40,15 +32,10 @@
     </swiper-slide>
   </swiper-container>
 
-  <!-- MODO GRID -->
   <div *ngIf="showAll" class="grid-wrapper">
     <div class="artist-card" *ngFor="let artist of artists" (click)="showSongsByArtist(artist)">
-      <!-- <div class="artist-card" *ngFor="let artist of artists"> -->
       <div class="artist-img-wrapper">
         <img [src]="artist.image" />
-        <ion-button fill="solid" color="success" shape="round" class="play-button" size="small">
-          <ion-icon slot="icon-only" name="play"></ion-icon>
-        </ion-button>
       </div>
       <div class="artist-info">
         <h3>{{ artist.name }}</h3>
@@ -58,3 +45,40 @@
   </div>
 
 </ion-content>
+<ion-footer *ngIf="song">
+  <ion-toolbar class="player-toolbar" color="dark">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="auto">
+          <ion-icon name="musical-notes-outline" class="music-icon"></ion-icon>
+        </ion-col>
+        <ion-col size="6">
+          <div class="track-info">
+            <div class="track-title">{{ song.name }}</div>
+          </div>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-button fill="clear" size="small" (click)="togglePlay()">
+            <ion-icon [name]="isPlaying ? 'pause' : 'play'" slot="icon-only" color="success"></ion-icon>
+          </ion-button>
+        </ion-col>
+        <ion-col size="auto">
+          <ion-button fill="clear" size="small" (click)="toggleFavorite()">
+            <ion-icon [name]="isFavoriteSong ? 'close' : 'heart'" slot="icon-only" color="danger"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row class="progress-row ion-align-items-center">
+        <ion-col size="2" class="time-label">
+          {{ currentTime }}
+        </ion-col>
+        <ion-col size="8">
+          <ion-progress-bar [value]="progress / 100" color="success"></ion-progress-bar>
+        </ion-col>
+        <ion-col size="2" class="time-label ion-text-end">
+          {{ durationTime }}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
