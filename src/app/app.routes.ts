@@ -40,7 +40,17 @@ export const routes: Routes = [
         path: 'home',
         loadComponent: () =>
           import('./home/home.page').then((m) => m.HomePage)
+      },
+      {
+        path: 'artits',
+        loadComponent: () => import('./artits/artits.page').then(m => m.ArtitsPage)
       }
     ]
-  }
+  },  {
+    path: 'songs-modal',
+    loadComponent: () => import('./songs-modal/songs-modal.page').then( m => m.SongsModalPage)
+  },
+
+
+
 ];

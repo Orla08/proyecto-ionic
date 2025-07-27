@@ -28,4 +28,12 @@ export class MenuPage implements OnInit {
     await this.toastService.showMessageInfo('Sesión cerrada correctamente');
     this.router.navigateByUrl('/login', { replaceUrl: true });
   }
+
+  goPageArtits() {
+    this.router.navigateByUrl('menu/artits', { replaceUrl: true });
+  }
+
+  goHome() {
+    this.router.navigateByUrl('menu/home', { replaceUrl: true });
+  }
 }

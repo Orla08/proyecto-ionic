@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
   theme: string = "claro";
   colorTheme: string = 'var(--bg-claro-2)';
   tracks: Track[] = [];
+  albums: any;
   listSlides: slides[] = [
     {
       title: 'Bienvenido al Ritmo de tu Vida',
@@ -49,7 +50,7 @@ export class HomePage implements OnInit {
   constructor(
     private router: Router,
     private storageService: StorageService,
-    private msuicService: MusicService
+    private musicService: MusicService
   ) {
   }
 
@@ -77,9 +78,17 @@ export class HomePage implements OnInit {
   }
 
   loadTracks() {
-    this.msuicService.getTracks().subscribe({
+    this.musicService.getTracks().subscribe({
       next: (res) => {
         this.tracks = res;
+      }
+    })
+  }
+
+  loadAllAlbums() {
+    this.musicService.getAllAlbums().subscribe({
+      next: (res) => {
+        this.albums = res;
       }
     })
   }

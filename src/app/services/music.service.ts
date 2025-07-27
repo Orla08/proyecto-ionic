@@ -31,4 +31,30 @@ export class MusicService {
     return this.http.get<Track[]>(`${this.urlServer}/tracks`)
   }
 
+  getTracksByArtitsId(artitsId: number): Observable<Track[]> {
+    return this.http.get<Track[]>(`${this.urlServer}/tracks/artist/${artitsId}`)
+  }
+
+  getTracksByAlbumId(almbunId: number): Observable<Track[]> {
+    return this.http.get<Track[]>(`${this.urlServer}/tracks/album/${almbunId}`)
+  }
+
+  getAllAlbums() {
+    return this.http.get<Track[]>(`${this.urlServer}/albums`)
+  }
+
+  getAlbumById(albumId: number) {
+    return this.http.get<Track[]>(`${this.urlServer}/tracks/album/${albumId}`)
+  }
+
+  getAllArtits() {
+    return this.http.get<Track[]>(`${this.urlServer}/artists`)
+  }
+
+  getArtitsById(id: number) {
+    return this.http.get<Track[]>(`${this.urlServer}/artists/${id}`)
+  }
+
+
+
 }

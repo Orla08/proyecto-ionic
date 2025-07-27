@@ -1,0 +1,17 @@
+.artist-header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.artist-image {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.artist-name {
+    margin-top: 0.5rem;
+    font-weight: 600;
+}
